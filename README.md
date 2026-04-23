@@ -1,0 +1,110 @@
+# <HEADLINE>
+
+<DESCRIPTION>
+
+## Initializing the Project
+
+I used Anaconda to set up the project environment. I only use conda to manage the Python environment and pip to manage the dependencies. You can create a new conda environment with:
+
+```powershell
+conda create -n <ENVIRONMENT_NAME>
+conda activate <ENVIRONMENT_NAME>
+```
+
+You can install the requirements using:
+
+```powershell
+# Or from environment.yml (recommended for conda)
+conda env create -f environment.yml -n <ENVIRONMENT_NAME>
+conda activate <ENVIRONMENT_NAME>
+
+# From requirements.txt
+pip install -r requirements.txt
+
+```
+
+> [!IMPORTANT] DEPENDENCIES
+> Both files need to be updated whenever new packages are added to the project or existing ones are updated.
+
+```powershell
+pip list --format=freeze --not-required > requirements.txt & conda env export --no-builds --ignore-channels --from-history | Select-String -NotMatch "^prefix:" > environment.yml
+```
+
+An existing environment can be updated with:
+
+```powershell
+pip install -r requirements.txt --upgrade
+```
+
+## Updating Dependencies
+
+You can check if there are outdated packages with:
+
+```powershell
+conda update --all --dry-run
+pip list --not-required --outdated
+```
+
+The version numbers in the `requirements.txt` must be updated manually. Updating dependencies should be manually and under the developer's control.
+
+If there are any outdated packages, you can update them with:
+
+```powershell
+conda update -n <ENVIRONMENT_NAME> --all # Only if there are any dependencies installed with conda 
+pip install -r requirements.txt --upgrade
+```
+
+## Testing
+
+To make pytest and other Pylance find imports in the folder `src` or any subfolder of it, you need to configure the `PYTHONPATH` environment variable to include them. This can be done in `tests/conftest.py`:
+
+```python
+SRC_PATH = PROJECT_ROOT / "src"
+
+if str(SRC_PATH) not in sys.path:
+    sys.path.insert(0, str(SRC_PATH))
+```
+
+The tests can then be run with:
+
+```powershell
+pytest
+```
+
+## Optional local VS Code terminal setup (opt-in)
+
+Machine-specific terminal profile settings are intentionally not committed to the shared workspace file.
+If you want an auto-activating conda terminal in VS Code, add this to your local `.vscode/settings.json` or into a `project.local.code-workspace` file:
+
+```json
+"settings": {
+    ...,
+    "terminal.integrated.profiles.windows": {
+        "WorkspacePwsh": {
+            "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "cd $env:WORKSPACE_ROOT; conda activate $env:CONDA_ENV"
+            ],
+            "env": {
+                "WORKSPACE_ROOT": "${workspaceFolder}",
+                "CONDA_ENV": "base"
+            }
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "WorkspacePwsh"
+},
+```
+
+Adjust the profile name, shell path, and environment name to your local machine.
+
+> [!TIP] Test data
+> You can generate test data by executing `tools/create_test_recipes.py`. It will generate recipes under `data`.
+
+> [!IMPORTANT] CODE-WORKSPACE
+> In the `local.code-workspace` file, set `"CONDA_ENV"` to the name of the conda environment you created. This will allow VS Code to automatically activate the correct environment when you open the workspace.
+
+## Security and Privacy
+
+Under `docs/pias` is documented what personal data is processed in the app, how it is processed, and what measures are taken to protect it. These are living documents that should be updated whenever there are changes to the data processing in the app. It is important to keep these documents up to date to ensure compliance with data protection regulations and to maintain transparency with users about how their data is being used.
