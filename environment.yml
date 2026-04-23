@@ -1,0 +1,7 @@
+
+name: ds-ml
+channels:
+  - defaults
+dependencies:
+  - python=3.14
+
