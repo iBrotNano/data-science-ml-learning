@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 ```
 
-> [!IMPORTANT] DEPENDENCIES
+> [!IMPORTANT]
 > Both files need to be updated whenever new packages are added to the project or existing ones are updated.
 
 ```powershell
@@ -99,10 +99,10 @@ If you want an auto-activating conda terminal in VS Code, add this to your local
 
 Adjust the profile name, shell path, and environment name to your local machine.
 
-> [!TIP] Test data
+> [!TIP]
 > You can generate test data by executing `tools/create_test_recipes.py`. It will generate recipes under `data`.
 
-> [!IMPORTANT] CODE-WORKSPACE
+> [!IMPORTANT]
 > In the `local.code-workspace` file, set `"CONDA_ENV"` to the name of the conda environment you created. This will allow VS Code to automatically activate the correct environment when you open the workspace.
 
 ## Security and Privacy
