@@ -7,16 +7,16 @@
 I used Anaconda to set up the project environment. I only use conda to manage the Python environment and pip to manage the dependencies. You can create a new conda environment with:
 
 ```powershell
-conda create -n <ENVIRONMENT_NAME>
-conda activate <ENVIRONMENT_NAME>
+conda create -n ds-ml python=3.14
+conda activate ds-ml
 ```
 
 You can install the requirements using:
 
 ```powershell
 # Or from environment.yml (recommended for conda)
-conda env create -f environment.yml -n <ENVIRONMENT_NAME>
-conda activate <ENVIRONMENT_NAME>
+conda env create -f environment.yml -n ds-ml
+conda activate ds-ml
 
 # From requirements.txt
 pip install -r requirements.txt
@@ -50,7 +50,7 @@ The version numbers in the `requirements.txt` must be updated manually. Updating
 If there are any outdated packages, you can update them with:
 
 ```powershell
-conda update -n <ENVIRONMENT_NAME> --all # Only if there are any dependencies installed with conda 
+conda update -n ds-ml --all # Only if there are any dependencies installed with conda 
 pip install -r requirements.txt --upgrade
 ```
 
@@ -89,7 +89,7 @@ If you want an auto-activating conda terminal in VS Code, add this to your local
             ],
             "env": {
                 "WORKSPACE_ROOT": "${workspaceFolder}",
-                "CONDA_ENV": "base"
+                "CONDA_ENV": "ds-ml"
             }
         }
     },
