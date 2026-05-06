@@ -6,3 +6,4 @@ pip==26.0.1
 PyYAML==6.0.3
 scipy==1.17.1
 spacy==3.8.13
+SQLAlchemy==2.0.49
